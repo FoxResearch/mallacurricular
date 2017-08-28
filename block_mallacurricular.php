@@ -1,7 +1,5 @@
 <?php
 
-require_once('../../config.php');
-
 class block_mallacurricular extends block_base {
 
     //
@@ -27,7 +25,7 @@ class block_mallacurricular extends block_base {
         // Get plugin config.
         $coc_config = get_config('block_mallacurricular');
 
-        $this->content         =  new stdClass;
+        $this->content         =  new stdClass();
         $this->content->text   = 'The content of our Malla Curricular block!';
 
         $url1 = new moodle_url(
@@ -64,17 +62,10 @@ class block_mallacurricular extends block_base {
     //
     // No permite mas de 1 bloque
     public function instance_allow_multiple() {
-        return false;
-    }
-
-    //
-    // Cuenta con archivo settings.php
-    public function has_config() {
         return true;
     }
 
-    public function applicable_formats() {
-        return array('my-index' => true, 'my' => true, 'site-index' => true);
+    function applicable_formats() {
+        return array('all' => true, 'tag' => false);
     }
 }
-?>

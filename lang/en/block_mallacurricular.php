@@ -1,7 +1,5 @@
 <?php
 
-defined('MOODLE_INTERNAL') || die();
-
 $string['mallacurricular'] = 'Malla Curricular';
 $string['mallacurricular:addinstance'] = 'Add a new MallaCurricular block';
 $string['mallacurricular:myaddinstance'] = 'Add a new MallaCurricular block to the My Moodle page';

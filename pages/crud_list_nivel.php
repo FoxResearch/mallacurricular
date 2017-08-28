@@ -1,5 +1,5 @@
 <?php
-$nivel = 1;
+
 require_once('../../../config.php');
 global $DB, $OUTPUT, $PAGE, $COURSE;
 
@@ -12,13 +12,15 @@ $result = null;
 $id = null;
 
 // paramtros requeridos
+$nivel = optional_param('nivel', 0, PARAM_INT);
 $id = optional_param('id', 0, PARAM_INT);
+$padre = $nivel - 1;
 
 // infraestructura
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url(
-  '/blocks/mallacurricular/pages/crud_list_nivel' . $nivel . '.php',
-  array('id' => 0));
+  '/blocks/mallacurricular/pages/crud_list_nivel.php',
+  array('nivel' => $nivel));
 // $PAGE->set_pagelayout('standard');
 $PAGE->set_title( get_string('titulo', 'block_mallacurricular') );
 $PAGE->set_heading( get_string('titulo', 'block_mallacurricular') );
@@ -35,7 +37,7 @@ $editnode->make_active();
 // Eliminar registro solicitado
 //
 if( $id != null ) {
-  $DB->delete_records('malla_nivel' . $nivel, array( 'id' => $id ) );
+  $DB->delete_records("malla_nivel" . $nivel, array( 'id' => $id ) );
 }
 
 //
@@ -66,7 +68,19 @@ foreach( $result as $item ) {
   $link1 = html_writer::link($url1, 'Editar');
   $link2 = html_writer::link($url2, 'Borrar');
 
-  $item->padre = "por completar";
+  if( $nivel > 1 ) {
+    $result = $DB->get_record("malla_nivel" . $padre , array( 'id' => $item->{"id_nivel" . $padre} )  );
+    if( isset($result) ) {
+      $item->padre = $result->nombre . " (" . $result->codigo . ")";
+    }
+    else {
+      $item->padre = "No existe (" . $item->{"id_nivel" . $padre} . ")";
+    }
+  }
+  else {
+    $item->padre = "- -";
+  }
+
 
   $row = null;
   $row = array( $item->id, $item->padre, $item->nombre . ' (' . $item->codigo . ')', $item->activo, $link1 . ' | ' . $link2 );
@@ -74,7 +88,7 @@ foreach( $result as $item ) {
 }
 
 $table = new html_table();
-$table->head = array( 'Id', 'Raiz', 'Nombre', 'Activo', 'Acciones' );
+$table->head = array( 'Id', 'Padre', 'Nombre', 'Activo', 'Acciones' );
 $table->data = $allrow;
 
 // Imprimir pagina

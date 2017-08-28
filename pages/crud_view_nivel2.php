@@ -6,6 +6,12 @@ class view_form extends moodleform {
 
     function definition() {
 
+        global $DB;
+
+        $nivel = 2;
+        $padre = $nivel - 1;
+        $block = 'mallacurricular';
+
         $mform =& $this->_form;
         $mform->addElement('header','displayinfo', 'Edicion');
 
@@ -19,17 +25,37 @@ class view_form extends moodleform {
         $mform->setType('codigo', PARAM_RAW);
         $mform->addRule('codigo', null, 'required', null, 'client');
 
+        // add Padre field
+
+        $options = array(
+            null  => 'Elija una opcion'
+        );
+
+        $result = $DB->get_records("malla_nivel" . $padre , null );
+
+        foreach( $result as $item ) {
+            $options[$item->id] = $item->nombre . ' (' . $item->codigo . ')';
+        }
+
+        $mform->addElement(
+          'select',
+          'id_nivel' . $padre,
+          get_string("nivel" . $padre, $block ),
+          $options,
+          null );
+        $mform->addRule( "id_nivel" . $padre, null, 'required', null, 'client');
+
         // add activo field
         $mform->addElement('select', 'activo', 'Activo', array(null=>'Elija una opcion',1=>'Si',0=>'No'));
         $mform->setDefault('activo',null);
         $mform->addRule('activo', null, 'required', null, 'client');
 
-        // add date_time selector in optional area
-        // $mform->addElement('date_time_selector', 'displaydate', 'hola', array('optional' => true));
-        // $mform->setAdvanced('optional');
-
         // hidden elements
-        $mform->addElement('hidden', 'id');
+        $mform->addElement('hidden', "nivel", $nivel);
+        $mform->addElement('hidden', 'id' );
+        $mform->addElement('hidden', 'id_dato1' );
+        $mform->addElement('hidden', 'id_dato2' );
+        $mform->addElement('hidden', 'id_dato3' );
 
         $this->add_action_buttons();
     }

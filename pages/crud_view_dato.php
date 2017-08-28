@@ -6,7 +6,6 @@ class view_form extends moodleform {
 
     function definition() {
 
-        $nivel = 1;
         $block = 'mallacurricular';
 
         $mform =& $this->_form;
@@ -28,11 +27,8 @@ class view_form extends moodleform {
         $mform->addRule('activo', null, 'required', null, 'client');
 
         // hidden elements
-        $mform->addElement('hidden', 'nivel', $nivel);
+        $mform->addElement('hidden', 'dato');
         $mform->addElement('hidden', 'id' );
-        $mform->addElement('hidden', 'id_dato1' );
-        $mform->addElement('hidden', 'id_dato2' );
-        $mform->addElement('hidden', 'id_dato3' );
 
         $this->add_action_buttons();
     }

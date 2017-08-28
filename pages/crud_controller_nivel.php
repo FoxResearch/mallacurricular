@@ -15,13 +15,11 @@ $id = null;
 global $DB, $OUTPUT, $PAGE;
 
 // ID del registro a editar
+$nivel = optional_param('nivel', 0, PARAM_INT);
 $id = optional_param('id', 0, PARAM_INT);
-$nivel = optional_param('padre', 0, PARAM_INT);
 
 require_once('crud_view_nivel' . $nivel . '.php');
-
 $padre = $nivel - 1;
-$toform['id'] = $id;
 
 // NAVIGATION TOP
 $settingsnode = $PAGE->settingsnav->add(get_string('titulo', 'block_mallacurricular'));
@@ -33,8 +31,8 @@ $editnode->make_active();
 
 // infraestructura de la pagina MOODLE
 $PAGE->set_url(
-  '/blocks/mallacurricular/pages/crud_controller_nivel' . $nivel . '.php',
-  array('id' => 0));
+  '/blocks/mallacurricular/pages/crud_controller_nivel.php',
+  array('nivel' => $nivel));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading( get_string('titulo', 'block_mallacurricular') );
 
@@ -81,8 +79,8 @@ else if ( $fromform != null ) {
 
     // Redirige para mostrarle el resultado final al usuario
     $editurl = new moodle_url(
-        '/blocks/mallacurricular/pages/crud_controller_nivel' . $nivel . '.php',
-        array('id' => $id ));
+        '/blocks/mallacurricular/pages/crud_controller_nivel.php',
+        array('nivel' => $nivel, 'id' => $id ));
     redirect($editurl, $message);
 }
 
@@ -99,7 +97,11 @@ else {
         $toform['nombre'] = $result->nombre;
         $toform['codigo'] = $result->codigo;
         $toform['activo'] = $result->activo;
-        $toform["id_nivel" . $padre] = $result->{"id_nivel" . $padre};
+        $toform['id']     = $result->id;
+        if( isset($result->{"id_nivel" . $padre})) $toform["id_nivel" . $padre] = $result->{"id_nivel" . $padre};
+        if( isset($result->$id_dato1)) $toform["id_dato1"] = $result->$id_dato1;
+        if( isset($result->$id_dato2)) $toform["id_dato2"] = $result->$id_dato2;
+        if( isset($result->$id_dato3)) $toform["id_dato3"] = $result->$id_dato3;
       }
     }
     else {
