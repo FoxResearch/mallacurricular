@@ -6,7 +6,7 @@ class view_form extends moodleform {
 
     function definition() {
 
-        global $DB;
+        global $coc_config, $USER, $CFG, $DB, $PAGE, $OUTPUT;
 
         $nivel = 4;
         $padre = $nivel - 1;
@@ -17,13 +17,13 @@ class view_form extends moodleform {
 
         // add page title element.
         $mform->addElement('text', 'nombre', 'Descripcion');
-        $mform->setType('nombre', PARAM_RAW);
+        $mform->setType('nombre', PARAM_RAW );
         $mform->addRule('nombre', null, 'required', null, 'client');
 
         // add display text field
         $mform->addElement('text', 'codigo', 'Codigo');
-        $mform->setType('codigo', PARAM_RAW);
-        $mform->addRule('codigo', null, 'optional', null, 'client');
+        $mform->setType('codigo', PARAM_RAW );
+        // $mform->addRule('codigo', null, 'optional', null, 'client');
 
         // add Padre field
 
@@ -40,9 +40,10 @@ class view_form extends moodleform {
         $mform->addElement(
           'select',
           'id_nivel' . $padre,
-          get_string("nivel" . $padre, $block ),
+          get_string("nivel" . $padre, 'block_' . $block ),
           $options,
           null );
+        $mform->setType( 'id_nivel' . $padre, PARAM_RAW);
         $mform->addRule( "id_nivel" . $padre, null, 'required', null, 'client');
 
         // add Sede & ciclo field
@@ -59,22 +60,25 @@ class view_form extends moodleform {
 
           $mform->addElement(
             'select',
-            'id_dato' . $padre,
-            get_string("dato" . $padre, $block ),
+            "id_dato" . $padre,
+            get_string('dato' . $padre, 'block_' . $block ),
             $options,
             null );
-          $mform->addRule( "id_dato" . $padre, null, 'optional', null, 'client');
+          $mform->setType( "id_dato" . $padre, PARAM_RAW);
+          // $mform->addRule( "id_dato" . $padre, null, 'optional', null, 'client');
         }
 
         // add activo field
         $mform->addElement('select', 'activo', 'Activo', array(null=>'Elija una opcion',1=>'Si',0=>'No'));
-        $mform->setDefault('activo',null);
+        $mform->setType( 'activo', PARAM_RAW);
         $mform->addRule('activo', null, 'required', null, 'client');
 
         // hidden elements
         $mform->addElement('hidden', "nivel", $nivel);
+        $mform->setType( "nivel", PARAM_RAW);
+
         $mform->addElement('hidden', 'id' );
-        $mform->addElement('hidden', 'id_dato3' );
+        $mform->setType( 'id', PARAM_RAW);
 
         $this->add_action_buttons();
     }

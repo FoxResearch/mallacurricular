@@ -52,10 +52,15 @@ class view_form extends moodleform {
 
         // hidden elements
         $mform->addElement('hidden', "nivel", $nivel);
+        $mform->setType( "nivel", PARAM_TEXT);
         $mform->addElement('hidden', 'id' );
+        $mform->setType( 'id', PARAM_TEXT);
         $mform->addElement('hidden', 'id_dato1' );
+        $mform->setType( 'id_dato1', PARAM_TEXT);
         $mform->addElement('hidden', 'id_dato2' );
+        $mform->setType( 'id_dato2', PARAM_TEXT);
         $mform->addElement('hidden', 'id_dato3' );
+        $mform->setType( 'id_dato3', PARAM_TEXT);
 
         $this->add_action_buttons();
     }

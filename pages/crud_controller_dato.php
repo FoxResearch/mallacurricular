@@ -21,6 +21,14 @@ $id = optional_param('id', 0, PARAM_INT);
 require_once('crud_view_dato.php');
 $padre = $dato - 1;
 
+// infraestructura de la pagina MOODLE
+$PAGE->set_context(context_system::instance());
+$PAGE->set_url(
+  '/blocks/mallacurricular/pages/crud_controller_nivel.php',
+  array('nivel' => $dato));
+$PAGE->set_pagelayout('standard');
+$PAGE->set_heading( get_string('titulo', 'block_mallacurricular') );
+
 // NAVIGATION TOP
 $settingsnode = $PAGE->settingsnav->add(get_string('titulo', 'block_mallacurricular'));
 $editurl = new moodle_url(
@@ -28,13 +36,6 @@ $editurl = new moodle_url(
   array('id' => 0) );
 $editnode = $settingsnode->add( 'Inicio', $editurl );
 $editnode->make_active();
-
-// infraestructura de la pagina MOODLE
-$PAGE->set_url(
-  '/blocks/mallacurricular/pages/crud_controller_nivel.php',
-  array('nivel' => $dato));
-$PAGE->set_pagelayout('standard');
-$PAGE->set_heading( get_string('titulo', 'block_mallacurricular') );
 
 // Seleccion de la vista
 $html = new view_form();

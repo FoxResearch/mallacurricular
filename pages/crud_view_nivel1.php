@@ -24,15 +24,25 @@ class view_form extends moodleform {
 
         // add activo field
         $mform->addElement('select', 'activo', 'Activo', array(null=>'Elija una opcion',1=>'Si',0=>'No'));
+        $mform->setType('activo', PARAM_RAW);
         $mform->setDefault('activo',null);
         $mform->addRule('activo', null, 'required', null, 'client');
 
         // hidden elements
-        $mform->addElement('hidden', 'nivel', $nivel);
+        $mform->addElement('hidden', "nivel", $nivel);
+        $mform->setType( "nivel", PARAM_TEXT);
+
         $mform->addElement('hidden', 'id' );
+        $mform->setType( 'id', PARAM_TEXT);
+
         $mform->addElement('hidden', 'id_dato1' );
+        $mform->setType( 'id_dato1', PARAM_TEXT);
+
         $mform->addElement('hidden', 'id_dato2' );
+        $mform->setType( 'id_dato2', PARAM_TEXT);
+
         $mform->addElement('hidden', 'id_dato3' );
+        $mform->setType( 'id_dato3', PARAM_TEXT);
 
         $this->add_action_buttons();
     }

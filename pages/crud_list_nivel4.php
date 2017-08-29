@@ -45,7 +45,16 @@ if( $id != null ) {
 //
 $row = null;
 $allrow = array();
-$result = $DB->get_records('malla_nivel' . $nivel , null );
+$result = $DB->get_records_sql(
+    "SELECT N4.id, CONCAT( N4.nombre, ' (', N4.codigo, ')' ) as nombre, N4.activo, " .
+    "CONCAT( N3.nombre, ' (', N3.codigo, ')' ) as padre, " .
+    "CONCAT( D1.nombre, ' (', D1.codigo, ')' ) as sede, " .
+    "CONCAT( D2.nombre, ' (', D2.codigo, ')' ) as ciclo " .
+    "FROM {malla_nivel4} N4 " .
+    "LEFT JOIN {malla_dato1}  D1 ON N4.id_dato1  = D1.id " .
+    "LEFT JOIN {malla_dato2}  D2 ON N4.id_dato2  = D2.id " .
+    "LEFT JOIN {malla_nivel3} N3 ON N4.id_nivel3 = N3.id "
+    , null );
 
 foreach( $result as $item ) {
 
@@ -68,21 +77,18 @@ foreach( $result as $item ) {
   $link1 = html_writer::link($url1, 'Editar');
   $link2 = html_writer::link($url2, 'Borrar');
 
-    $result = $DB->get_record("malla_nivel" . $padre , array( 'id' => $item->{"id_nivel" . $padre} )  );
-    if( isset($result) ) {
-      $item->padre = $result->nombre . " (" . $result->codigo . ")";
-    }
-    else {
-      $item->padre = "No existe (" . $item->{"id_nivel" . $padre} . ")";
-    }
-
   $row = null;
-  $row = array( $item->id, $item->padre, $item->nombre . ' (' . $item->codigo . ')', $item->activo, $link1 . ' | ' . $link2 );
+  $row = array( $item->id, $item->padre, $item->sede, $item->ciclo, $item->nombre, $item->activo, $link1 . ' | ' . $link2 );
   $allrow[] = $row;
 }
 
 $table = new html_table();
-$table->head = array( 'Id', 'Curso', 'Descripcion', 'Activo', 'Acciones' );
+$table->head = array(
+  'Id',
+  get_string('nivel3','block_mallacurricular'),
+  get_string('dato1','block_mallacurricular'),
+  get_string('dato2','block_mallacurricular'),
+  'Descripcion', 'Activo', 'Acciones' );
 $table->data = $allrow;
 
 // Imprimir pagina

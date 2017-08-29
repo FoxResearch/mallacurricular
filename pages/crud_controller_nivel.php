@@ -15,26 +15,27 @@ $id = null;
 global $DB, $OUTPUT, $PAGE;
 
 // ID del registro a editar
-$nivel = optional_param('nivel', 0, PARAM_INT);
-$id = optional_param('id', 0, PARAM_INT);
+$nivel = optional_param('nivel', '1', PARAM_RAW);
+$id = optional_param('id', '0', PARAM_RAW );
 
 require_once('crud_view_nivel' . $nivel . '.php');
 $padre = $nivel - 1;
 
-// NAVIGATION TOP
-$settingsnode = $PAGE->settingsnav->add(get_string('titulo', 'block_mallacurricular'));
-$editurl = new moodle_url(
-  '/blocks/mallacurricular/admin_index.php',
-  array('id' => 0) );
-$editnode = $settingsnode->add( 'Inicio', $editurl );
-$editnode->make_active();
-
 // infraestructura de la pagina MOODLE
+$PAGE->set_context(context_system::instance());
 $PAGE->set_url(
   '/blocks/mallacurricular/pages/crud_controller_nivel.php',
   array('nivel' => $nivel));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading( get_string('titulo', 'block_mallacurricular') );
+
+// NAVIGATION TOP
+$settingsnode = $PAGE->settingsnav->add( get_string('titulo', 'block_mallacurricular') );
+$editurl = new moodle_url(
+  '/blocks/mallacurricular/admin_index.php',
+  array('id' => 0) );
+$editnode = $settingsnode->add( 'Inicio', $editurl );
+$editnode->make_active();
 
 // Seleccion de la vista
 $html = new view_form();
@@ -93,15 +94,17 @@ else {
 
       // Recuperar el registro para poder editarlo
       $result = $DB->get_record('malla_nivel' . $nivel , array( 'id' => $id ));
-      if( $result != null ) {
+      if( isset($result) ) {
         $toform['nombre'] = $result->nombre;
         $toform['codigo'] = $result->codigo;
         $toform['activo'] = $result->activo;
         $toform['id']     = $result->id;
-        if( isset($result->{"id_nivel" . $padre})) $toform["id_nivel" . $padre] = $result->{"id_nivel" . $padre};
-        if( isset($result->$id_dato1)) $toform["id_dato1"] = $result->$id_dato1;
-        if( isset($result->$id_dato2)) $toform["id_dato2"] = $result->$id_dato2;
-        if( isset($result->$id_dato3)) $toform["id_dato3"] = $result->$id_dato3;
+
+        if( $nivel = 4 ) {
+          if( isset($result->id_nivel3) ) $toform["id_nivel3"] = $result->id_nivel3;
+          if( isset($result->id_dato1)  ) $toform["id_dato1"]  = $result->id_dato1;
+          if( isset($result->id_dato2)  ) $toform["id_dato2"]  = $result->id_dato2;
+        }
       }
     }
     else {
@@ -113,6 +116,7 @@ else {
 
     // Impresion de la pagina
     echo $OUTPUT->header();
+
     $html->display();
     echo $OUTPUT->footer();
 }

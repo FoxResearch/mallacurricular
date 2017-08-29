@@ -6,7 +6,7 @@ class block_mallacurricular extends block_base {
     // Primer metodo a ser llamado
     //
     public function init() {
-        $this->title = get_string('pluginname', 'block_mallacurricular');
+        $this->title = get_string('titulo', 'block_mallacurricular');
     }
 
     public function get_content() {
@@ -30,7 +30,7 @@ class block_mallacurricular extends block_base {
 
         $url1 = new moodle_url(
             '/blocks/mallacurricular/admin_index.php',
-            array( 'id' => $COURSE->id )
+            array( 'id' => 0 )
         );
 
         $this->content->footer = html_writer::link($url1, 'Administrador');
@@ -44,13 +44,13 @@ class block_mallacurricular extends block_base {
     public function specialization() {
         if (isset($this->config)) {
             if (empty($this->config->title)) {
-                $this->title = get_string('mallacurricular', 'block_mallacurricular');
+                $this->title = get_string('titulo', 'block_mallacurricular');
             } else {
                 $this->title = $this->config->title;
             }
 
             if (empty($this->config->text)) {
-                $this->config->text = get_string('mallacurricular', 'block_mallacurricular');
+                $this->config->text = get_string('titulo', 'block_mallacurricular');
             }
         }
     }

@@ -88,7 +88,7 @@ foreach( $result as $item ) {
 }
 
 $table = new html_table();
-$table->head = array( 'Id', 'Padre', 'Nombre', 'Activo', 'Acciones' );
+$table->head = array( 'Id', get_string('nivel' . $padre, 'block_mallacurricular') , 'Nombre', 'Activo', 'Acciones' );
 $table->data = $allrow;
 
 // Imprimir pagina

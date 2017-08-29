@@ -1,6 +1,7 @@
 <?php
 
 $string['mallacurricular'] = 'Malla Curricular';
+$string['titulo'] = 'Malla Curricular';
 $string['mallacurricular:addinstance'] = 'Add a new MallaCurricular block';
 $string['mallacurricular:myaddinstance'] = 'Add a new MallaCurricular block to the My Moodle page';
 
