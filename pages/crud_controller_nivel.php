@@ -11,6 +11,7 @@ $html = null;
 $toform = array();
 $fromform = null;
 $id = null;
+$result = null;
 
 global $DB, $OUTPUT, $PAGE;
 
@@ -100,10 +101,14 @@ else {
         $toform['activo'] = $result->activo;
         $toform['id']     = $result->id;
 
+        if( $nivel > 1 ) {
+          $toform["id_nivel" . $padre] = $result->{"id_nivel" . $padre};
+        }
+
         if( $nivel = 4 ) {
-          if( isset($result->id_nivel3) ) $toform["id_nivel3"] = $result->id_nivel3;
           if( isset($result->id_dato1)  ) $toform["id_dato1"]  = $result->id_dato1;
           if( isset($result->id_dato2)  ) $toform["id_dato2"]  = $result->id_dato2;
+          if( isset($result->id_dato3)  ) $toform["id_dato3"]  = $result->id_dato3;
         }
       }
     }
@@ -116,8 +121,8 @@ else {
 
     // Impresion de la pagina
     echo $OUTPUT->header();
-
     $html->display();
+    // echo print_object($result);
     echo $OUTPUT->footer();
 }
 

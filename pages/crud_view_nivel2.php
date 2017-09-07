@@ -39,8 +39,8 @@ class view_form extends moodleform {
 
         $mform->addElement(
           'select',
-          'id_nivel' . $padre,
-          get_string("nivel" . $padre, $block ),
+          "id_nivel" . $padre,
+          get_string("nivel" . $padre, "block_" . $block ),
           $options,
           null );
         $mform->addRule( "id_nivel" . $padre, null, 'required', null, 'client');

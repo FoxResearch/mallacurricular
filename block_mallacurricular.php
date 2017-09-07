@@ -33,7 +33,20 @@ class block_mallacurricular extends block_base {
             array( 'id' => 0 )
         );
 
-        $this->content->footer = html_writer::link($url1, 'Administrador');
+        $url2 = new moodle_url(
+            '/blocks/mallacurricular/search/search_controller.php',
+            array( 'id' => 0 )
+        );
+
+        $url3 = new moodle_url(
+            '/blocks/mallacurricular/repo/repo_controller.php',
+            array( 'id' => 0 )
+        );
+
+        $this->content->footer =
+          html_writer::link($url1, 'Administrador') . " | " .
+          html_writer::link($url2, 'Busqueda') . " | " .
+          html_writer::link($url3, 'Reporte') . " | " ;
 
         return $this->content;
     }

@@ -1,14 +1,22 @@
 <?php
 
+$string['pluginname'] = 'Malla Curricular';
 $string['mallacurricular'] = 'Malla Curricular';
 $string['titulo'] = 'Malla Curricular';
 $string['mallacurricular:addinstance'] = 'Add a new MallaCurricular block';
 $string['mallacurricular:myaddinstance'] = 'Add a new MallaCurricular block to the My Moodle page';
 
+$string['nivel0'] = 'Raiz';
 $string['nivel1'] = 'Carrera';
 $string['nivel2'] = 'Plan';
 $string['nivel3'] = 'Curso';
 $string['nivel4'] = 'Curso Asignado';
+$string['dato1'] = 'Sede';
+$string['dato2'] = 'Ciclo';
+$string['dato3'] = 'Moodle';
+$string['dato4'] = 'Profesor';
+$string['search'] = 'Busqueda';
+$string['reporte'] = 'Reporte Academico';
 
 $string['create_nivel1'] = 'Crear nueva Carrera';
 $string['update_nivel1'] = 'Actualizar Carrera';
@@ -23,9 +31,6 @@ $string['update_dato1'] = 'Actualizar Sede';
 $string['create_dato2'] = 'Crear nuevo Ciclo';
 $string['update_dato2'] = 'Actualizar Ciclo';
 
-$string['dato1'] = 'Sede';
-$string['dato2'] = 'Ciclo';
-$string['dato3'] = 'Curso Moodle';
-$string['dato4'] = 'Profesor';
+
 
 ?>

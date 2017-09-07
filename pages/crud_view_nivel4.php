@@ -23,10 +23,8 @@ class view_form extends moodleform {
         // add display text field
         $mform->addElement('text', 'codigo', 'Codigo');
         $mform->setType('codigo', PARAM_RAW );
-        // $mform->addRule('codigo', null, 'optional', null, 'client');
 
         // add Padre field
-
         $options = array(
             null  => 'Elija una opcion'
         );
@@ -65,8 +63,25 @@ class view_form extends moodleform {
             $options,
             null );
           $mform->setType( "id_dato" . $padre, PARAM_RAW);
-          // $mform->addRule( "id_dato" . $padre, null, 'optional', null, 'client');
         }
+
+        // add curso moodle
+        $options = array(
+            null  => 'Elija una opcion'
+        );
+        $result = get_courses();
+
+        foreach( $result as $item ) {
+            $options[$item->id] = $item->fullname;
+        }
+
+        $mform->addElement(
+          'select',
+          "id_dato3",
+          get_string("dato3", 'block_' . $block ),
+          $options,
+          null );
+        $mform->setType( 'id_dato3', PARAM_INT);
 
         // add activo field
         $mform->addElement('select', 'activo', 'Activo', array(null=>'Elija una opcion',1=>'Si',0=>'No'));
